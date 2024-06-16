@@ -16,10 +16,22 @@ variable "us-east-1c_availability_zone" {
 variable "us-east-1e_availability_zone" {
   type = string
 }
-variable "public_subnet_cidr" {
+variable "public_subnet_1_cidr" {
   type = string
 }
-variable "private_subnet_cidr" {
+variable "public_subnet_2_cidr" {
+  type = string
+}
+variable "public_subnet_3_cidr" {
+  type = string
+}
+variable "private_subnet_1_cidr" {
+  type = string
+}
+variable "private_subnet_2_cidr" {
+  type = string
+}
+variable "private_subnet_3_cidr" {
   type = string
 }
 variable "public_subnet_1_name" {
