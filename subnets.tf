@@ -35,7 +35,7 @@ resource "aws_subnet" "private_subnet_2" {
   cidr_block        = var.private_subnet_2_cidr
   availability_zone = var.us-east-1c_availability_zone
   tags = {
-    Name = var.private_subnet_1_name
+    Name = var.private_subnet_2_name
   }
 }
 resource "aws_subnet" "private_subnet_3" {
@@ -43,6 +43,6 @@ resource "aws_subnet" "private_subnet_3" {
   cidr_block        = var.private_subnet_3_cidr
   availability_zone = var.us-east-1e_availability_zone
   tags = {
-    Name = var.private_subnet_1_name
+    Name = var.private_subnet_3_name
   }
 }
