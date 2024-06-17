@@ -10,8 +10,7 @@ This repository contains Terraform code to set up an Amazon Elastic Kubernetes S
   - [Prerequisites](#prerequisites)
   - [Components](#components)
   - [Usage](#usage)
-    - [Configuration](#configuration)
-  - [Usage](#usage-1)
+  - [Troubleshooting](#troubleshooting)
   - [Resources](#resources)
   - [Contributing](#contributing)
 
@@ -47,8 +46,6 @@ Before you begin, ensure you have the following:
 
 ## Usage
 
-### Configuration
-
 1. **Clone the Repository**
    ```bash
    git clone https://github.com/csye7125-su24-team17/infra-aws.git
@@ -72,7 +69,7 @@ Before you begin, ensure you have the following:
    ```bash
    terraform destroy
 
-## Usage
+## Troubleshooting
 
 1. **Node Group Creation Failure:** Ensure the subnets used by the node group have internet access if they need to pull images from the internet. Private subnets need a NAT Gateway configured.
    
