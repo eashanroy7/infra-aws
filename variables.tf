@@ -52,3 +52,40 @@ variable "private_subnet_2_name" {
 variable "private_subnet_3_name" {
   type = string
 }
+
+#############################################
+###### Variables for EKS Managed Node Group
+variable "min_size" {
+  type        = number
+  description = "Minimum size of the node group"
+}
+
+variable "max_size" {
+  type        = number
+  description = "Maximum size of the node group"
+}
+
+variable "desired_size" {
+  type        = number
+  description = "Desired size of the node group"
+}
+
+variable "instance_types" {
+  type        = list(string)
+  description = "Instance types for the node group"
+}
+
+variable "ami_type" {
+  type        = string
+  description = "AMI type for the node group instances"
+}
+
+variable "disk_size" {
+  type        = number
+  description = "Disk size (in GB) for the node group instances"
+}
+
+variable "max_unavailable" {
+  type        = number
+  description = "Maximum number of unavailable nodes during updates"
+}
