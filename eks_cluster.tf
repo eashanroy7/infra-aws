@@ -21,7 +21,7 @@ module "eks" {
   }
 
   # Identity and Access
-  iam_role_arn = var.eks_cluster_service_role
+  iam_role_arn = aws_iam_role.eks_cluster_role.arn
 
   # Addons
   cluster_addons = {
