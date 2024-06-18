@@ -2,12 +2,11 @@ module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "~> 20.0"
 
-  ##########################################################################
-  ########################### EKS CLUSTER
-
   # EKS Cluster Configuration
-  cluster_name    = "eks-cluster"
-  cluster_version = "1.29"
+  cluster_name        = var.eks_cluster_name
+  cluster_version     = var.eks_cluster_version
+  authentication_mode = var.eks_cluster_authentication_mode
+  cluster_ip_family   = var.eks_cluster_ip_family
 
   cluster_endpoint_public_access  = true
   cluster_endpoint_private_access = true
@@ -22,7 +21,7 @@ module "eks" {
   }
 
   # Identity and Access
-  iam_role_arn = aws_iam_role.eks_cluster_role.arn
+  iam_role_arn = var.eks_cluster_service_role
 
   # Addons
   cluster_addons = {
@@ -38,6 +37,10 @@ module "eks" {
     eks-pod-identity-agent = {
       most_recent = true
     }
+    aws-ebs-csi-driver = {
+      service_account_role_arn = module.ebs_csi_irsa_role.iam_role_arn
+      most_recent              = true
+    }
   }
 
   # Networking
@@ -48,7 +51,7 @@ module "eks" {
 
   # Tags
   tags = {
-    Name = "eks-cluster"
+    Name = var.eks_cluster_name
   }
 
   # Explicit Dependencies for EKS Cluster
@@ -60,28 +63,23 @@ module "eks" {
     aws_subnet.private_subnet_2,
     aws_subnet.private_subnet_3,
     aws_security_group.security_group,
-    aws_iam_role.eks_cluster_role,
     aws_kms_key.eks_secrets_key
   ]
 
-  ##########################################################################
-  ########################### EKS MANAGED NODE GROUP(s)
-
   eks_managed_node_groups = {
     eks_node_group = {
-      # Node Group Name
-      name = "eks-node-group"
+      name = var.eks_cluster_node_group_name
 
       # Scaling Configuration  
-      min_size     = var.min_size
-      max_size     = var.max_size
-      desired_size = var.desired_size
+      min_size     = var.node_group_min_size
+      max_size     = var.node_group_max_size
+      desired_size = var.node_group_desired_size
 
       # Node Configuration
-      instance_types = var.instance_types
-      ami_type       = var.ami_type
-      capacity_type  = "ON_DEMAND"
-      disk_size      = var.disk_size
+      instance_types = var.node_group_instance_types
+      ami_type       = var.node_group_instance_ami_type
+      capacity_type  = var.node_group_instance_capacity_type
+      disk_size      = var.node_group_instance_disk_size
 
       # Node IAM Role
       iam_role_arn = aws_iam_role.eks_worker_node_role.arn
@@ -91,12 +89,12 @@ module "eks" {
 
       # Optional: Set maximum unavailable nodes during updates
       update_config = {
-        max_unavailable = var.max_unavailable
+        max_unavailable = var.node_group_instance_max_unavailable
       }
 
       # Node Group Tags
       tags = {
-        Name = "eks-node-group"
+        Name = var.eks_cluster_node_group_name
       }
 
       # Explicit Dependencies for Node Group(s)

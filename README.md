@@ -91,3 +91,9 @@ Before you begin, ensure you have the following:
 
 ## Contributing
 Contributions are welcome! Please fork the repository and create a pull request with your changes.
+
+Add new context to kubeconfig
+aws eks --region us-east-1 update-kubeconfig --name eks-cluster
+
+Get nodes
+kubectl get nodes
