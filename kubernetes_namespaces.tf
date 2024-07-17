@@ -22,3 +22,11 @@ resource "kubernetes_namespace" "cve-consumer" {
   depends_on = [module.eks]
 }
 
+# Namespace for Cluster Autoscaler
+resource "kubernetes_namespace" "cluster-autoscaler-namespace" {
+  metadata {
+    name = "cluster-autoscaler-namespace"
+  }
+
+  depends_on = [module.eks]
+}
