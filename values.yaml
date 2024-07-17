@@ -10,7 +10,7 @@ listeners:
 
 ## @section Controller-eligible statefulset parameters
 controller:
-  replicaCount: 2
+  replicaCount: 0
   podAntiAffinityPreset: hard
   persistence:
     storageClass: "gp2"
