@@ -11,6 +11,9 @@ module "eks" {
   cluster_endpoint_public_access  = true
   cluster_endpoint_private_access = true
 
+  # OIDC Provider
+  enable_irsa = true
+
   # Observability
   cluster_enabled_log_types = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
 
@@ -94,7 +97,10 @@ module "eks" {
 
       # Node Group Tags
       tags = {
-        Name = var.eks_cluster_node_group_name
+        Name                                                = var.eks_cluster_node_group_name
+        # These tags are needed by cluster autoscaler to recognize and manage the node group
+        "k8s.io/cluster-autoscaler/${var.eks_cluster_name}" = "owned"
+        "k8s.io/cluster-autoscaler/enabled"                 = "true"
       }
 
       # Explicit Dependencies for Node Group(s)
