@@ -34,8 +34,15 @@ module "eks" {
     kube-proxy = {
       most_recent = true
     }
+    # vpc-cni = {
+    #   most_recent = true
+    # }
     vpc-cni = {
       most_recent = true
+      # This activates support for Kubernetes network policies, cause the default Amazon VPC CNI configuration doesn't.
+      configuration_values = jsonencode({
+        "enableNetworkPolicy" = "true"
+      })
     }
     eks-pod-identity-agent = {
       most_recent = true
