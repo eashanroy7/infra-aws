@@ -128,7 +128,7 @@ variable "chart_path" {
   type        = string
 }
 
-variable "helm_autoscaler_chart" {
-  description = "The filename of the Helm chart for the autoscaler"
+variable "kubeconfig_path" {
+  description = "The path to the local kubeconfig file"
   type        = string
 }
