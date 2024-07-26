@@ -104,7 +104,7 @@ module "eks" {
 
       # Node Group Tags
       tags = {
-        Name                                                = var.eks_cluster_node_group_name
+        Name = var.eks_cluster_node_group_name
         # These tags are needed by cluster autoscaler to recognize and manage the node group
         "k8s.io/cluster-autoscaler/${var.eks_cluster_name}" = "owned"
         "k8s.io/cluster-autoscaler/enabled"                 = "true"
@@ -118,4 +118,11 @@ module "eks" {
   }
   # Cluster access entry to add the current caller identity as an administrator
   enable_cluster_creator_admin_permissions = true
+}
+
+resource "null_resource" "kubeconfig" {
+  provisioner "local-exec" {
+    command = "aws eks update-kubeconfig --name eks-cluster --region us-east-1"
+  }
+  depends_on = [module.eks]
 }
