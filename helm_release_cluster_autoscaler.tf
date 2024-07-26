@@ -1,10 +1,16 @@
+resource "null_resource" "clone_repo" {
+  provisioner "local-exec" {
+    command = "git clone https://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@github.com/csye7125-su24-team17/helm-eks-autoscaler.git ./modules/charts/helm-eks-autoscaler"
+  }
+}
+
 resource "helm_release" "cluster_autoscaler" {
-  name = "cluster-autoscaler"
+  name       = "cluster-autoscaler"
   repository = "https://github.com/csye7125-su24-team17/helm-eks-autoscaler.git"
-  chart     = "${var.chart_path}/${var.helm_autoscaler_chart}"
-  version   = "0.1.0"
+  chart      = var.chart_path
+  version    = "0.1.0"
   # namespace = kubernetes_namespace.cluster-autoscaler-namespace.metadata[0].name
-  namespace  = "kube-system"
+  namespace = "kube-system"
 
   depends_on = [module.eks, kubernetes_namespace.cluster-autoscaler-namespace]
 }
