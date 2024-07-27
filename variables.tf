@@ -132,3 +132,8 @@ variable "kubeconfig_path" {
   description = "The path to the local kubeconfig file"
   type        = string
 }
+
+variable "dockerconfigjson" {
+  description = "Base64 encoded Docker config JSON"
+  type        = string
+}
