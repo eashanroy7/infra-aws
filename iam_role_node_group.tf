@@ -21,7 +21,11 @@ resource "aws_iam_role" "eks_worker_node_role" {
         Action = "sts:AssumeRoleWithWebIdentity"
         Condition = {
           StringEquals = {
-            "${module.eks.oidc_provider}:sub" : "system:serviceaccount:kube-system:cluster-autoscaler",
+            "${module.eks.oidc_provider}:sub" : [ 
+              # adding cluster autoscaler service account, fluent bit service account
+              "system:serviceaccount:kube-system:cluster-autoscaler",
+              "system:serviceaccount:amazon-cloudwatch:fluent-bit"
+            ],
             "${module.eks.oidc_provider}:aud" : "sts.amazonaws.com"
           }
         }
@@ -33,7 +37,8 @@ resource "aws_iam_role" "eks_worker_node_role" {
   managed_policy_arns = [
     "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
     "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly",
-    "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+    "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy",
+    "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy" # CloudWatch Logs policy for Fluent Bit
   ]
 }
 
