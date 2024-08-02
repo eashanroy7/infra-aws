@@ -49,3 +49,11 @@ resource "kubernetes_namespace" "operator-namespace" {
 
   depends_on = [module.eks, null_resource.kubeconfig]
 }
+
+resource "kubernetes_namespace" "amazon-cloudwatch" {
+  metadata {
+    name = "amazon-cloudwatch"
+  }
+
+  depends_on = [module.eks, null_resource.kubeconfig]
+}
