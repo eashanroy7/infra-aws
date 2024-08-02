@@ -123,7 +123,12 @@ variable "node_group_instance_max_unavailable" {
   description = "Maximum number of unavailable nodes during updates"
 }
 
-variable "chart_path" {
+variable "chart_path_autoscaler" {
+  description = "The path to the directory containing the Helm chart archives"
+  type        = string
+}
+
+variable "chart_path_fluentbit" {
   description = "The path to the directory containing the Helm chart archives"
   type        = string
 }
