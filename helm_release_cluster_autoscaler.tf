@@ -1,30 +1,25 @@
-resource "null_resource" "clone_repo_autoscaler" {
-  provisioner "local-exec" {
-    command = "git clone https://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@github.com/csye7125-su24-team17/helm-eks-autoscaler.git ./modules/charts/helm-eks-autoscaler"
-  }
-}
-resource "kubernetes_secret" "image_pull_secret" {
-  metadata {
-    name      = "k8spullsecret"
-    namespace = "kube-system"
-  }
-
-  data = {
-    ".dockerconfigjson" = var.dockerconfigjson
-  }
-
-  type = "kubernetes.io/dockerconfigjson"
-  depends_on = [ module.eks,kubernetes_namespace.cluster-autoscaler-namespace ]
-}
-
-
 resource "helm_release" "cluster_autoscaler" {
   name       = "cluster-autoscaler"
-  repository = "https://github.com/csye7125-su24-team17/helm-eks-autoscaler.git"
-  chart      = var.chart_path_autoscaler
-  version    = "0.1.0"
-  # namespace = kubernetes_namespace.cluster-autoscaler-namespace.metadata[0].name
-  namespace = "kube-system"
+  repository = "https://kubernetes.github.io/autoscaler"
+  chart      = "cluster-autoscaler"
+  namespace = "cluster-autoscaler-namespace"
+  version    = "9.37.0"
 
-  depends_on = [module.eks, kubernetes_namespace.cluster-autoscaler-namespace,kubernetes_secret.image_pull_secret]
+  set {
+    name  = "image.tag"
+    value = var.cluster_autoscaler_image_tag # Match the version with the chart version
+  }
+  set {
+    name  = "awsAccessKeyID"
+    value = var.aws_access_key
+  }
+  set {
+    name  = "awsSecretAccessKey"
+    value = var.aws_secret_access_key
+  }
+    
+  values = [
+    file("${path.module}/values/cluster-autoscaler-values.yaml")
+  ]
+  depends_on = [ kubernetes_namespace.cluster-autoscaler-namespace]
 }

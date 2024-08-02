@@ -35,6 +35,9 @@ resource "kubernetes_namespace" "cve-consumer" {
 resource "kubernetes_namespace" "cluster-autoscaler-namespace" {
   metadata {
     name = "cluster-autoscaler-namespace"
+    labels = {
+      istio-injection = "enabled"
+    }
   }
 
   depends_on = [module.eks, null_resource.kubeconfig]
@@ -55,5 +58,11 @@ resource "kubernetes_namespace" "amazon-cloudwatch" {
     name = "amazon-cloudwatch"
   }
 
+  depends_on = [module.eks, null_resource.kubeconfig]
+}
+resource "kubernetes_namespace" "monitoring" {
+  metadata {
+    name = "monitoring"
+  }
   depends_on = [module.eks, null_resource.kubeconfig]
 }

@@ -142,3 +142,39 @@ variable "dockerconfigjson" {
   description = "Base64 encoded Docker config JSON"
   type        = string
 }
+
+variable "db_user" {
+  type        = string
+}
+variable "db_password" {
+  type        = string
+}
+variable "db_name" {
+  type        = string
+}
+variable "db_hostname" {
+  type        = string
+}
+variable "grafana_username" {
+  type        = string
+}
+variable "grafana_password" {
+  type        = string
+}
+variable "aws_access_key" {
+  type        = string
+}
+variable "aws_secret_access_key" {
+  type        = string
+}
+variable "cluster_autoscaler_image_tag" {
+  type        = string
+}
+
+variable "tls_cert" {
+  type = string
+}
+
+variable "tls_key" {
+  type = string
+}
