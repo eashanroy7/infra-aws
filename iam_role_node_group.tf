@@ -23,7 +23,7 @@ resource "aws_iam_role" "eks_worker_node_role" {
           StringEquals = {
             "${module.eks.oidc_provider}:sub" : [ 
               # adding cluster autoscaler service account, fluent bit service account
-              "system:serviceaccount:kube-system:cluster-autoscaler",
+              "system:serviceaccount:cluster-autoscaler-namespace:cluster-autoscaler",
               "system:serviceaccount:amazon-cloudwatch:fluent-bit"
             ],
             "${module.eks.oidc_provider}:aud" : "sts.amazonaws.com"
