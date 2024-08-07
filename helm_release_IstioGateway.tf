@@ -8,9 +8,14 @@ resource "helm_release" "gateway" {
 
   repository       = "https://istio-release.storage.googleapis.com/charts"
   chart            = "gateway"
-  namespace        = "istio-ingress"
+  namespace        = "istio-system"
   create_namespace = true
   version          = "1.17.1"
+
+  # set {
+  #   name  = "service.externalTrafficPolicy"
+  #   value = "Local"
+  # }
 
   depends_on = [
     helm_release.istio_base,

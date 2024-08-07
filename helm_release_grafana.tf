@@ -37,17 +37,17 @@ resource "helm_release" "grafana" {
   depends_on = [ kubernetes_secret.grafana_secret ]
 }
 
-resource "kubernetes_secret" "grafana_tls" {
-  metadata {
-    name      = "grafana-tls"
-    namespace = "monitoring"
-  }
+# resource "kubernetes_secret" "grafana_tls" {
+#   metadata {
+#     name      = "grafana-tls"
+#     namespace = "monitoring"
+#   }
 
-  data = {
-    "tls.crt" = var.tls_cert
-    "tls.key" = var.tls_key
-  }
+#   data = {
+#     "tls.crt" = var.tls_cert
+#     "tls.key" = var.tls_key
+#   }
 
-  type = "kubernetes.io/tls"
-  depends_on = [ kubernetes_namespace.monitoring ]
-}
+#   type = "kubernetes.io/tls"
+#   depends_on = [ kubernetes_namespace.monitoring ]
+# }
