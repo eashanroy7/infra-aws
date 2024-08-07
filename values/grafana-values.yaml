@@ -9,18 +9,18 @@ datasources:
         isDefault: true
 
 
-ingress:
-  enabled: true
-  ingressClassName: nginx
-  annotations:
-    kubernetes.io/ingress.class: nginx
-  path: /
-  hosts:
-    - grafana.hemanthnvd.com
-  tls:
-    - secretName: grafana-tls
-      hosts:
-        - grafana.hemanthnvd.com
+# ingress:
+#   enabled: true
+#   ingressClassName: nginx
+#   annotations:
+#     kubernetes.io/ingress.class: nginx
+#   path: /
+#   hosts:
+#     - grafana.hemanthnvd.com
+#   tls:
+#     - secretName: grafana-tls
+#       hosts:
+#         - grafana.hemanthnvd.com
 
 service:
   type: ClusterIP
@@ -28,7 +28,7 @@ service:
 
 grafana.ini:
   server:
-    root_url: https://grafana.hemanthnvd.com
+    root_url: https://grafana.eashanroy.me
 
 # Define where Grafana should look for dashboard files
 dashboardProviders:
