@@ -1,0 +1,15 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: grafana-tls
+  namespace: istio-system
+spec:
+  secretName: grafana-tls # Name of the secret to store the issued TLS certificate and private key
+  duration: 2160h  # 90 days
+  renewBefore: 720h  # 30 days
+  commonName: grafana.eashanroy.me
+  dnsNames:
+  - grafana.eashanroy.me
+  issuerRef:
+    name: letsencrypt-staging
+    kind: ClusterIssuer
